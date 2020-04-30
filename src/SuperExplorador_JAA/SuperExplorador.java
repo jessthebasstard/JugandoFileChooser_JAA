@@ -5,6 +5,8 @@
  */
 package SuperExplorador_JAA;
 
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author The Test
@@ -16,6 +18,17 @@ public class SuperExplorador extends javax.swing.JFrame {
      */
     public SuperExplorador() {
         initComponents();
+        exploradorArchivos.setControlButtonsAreShown(false);
+        exploradorArchivos.addChoosableFileFilter(new FileNameExtensionFilter(
+                "Imagenes", "jpg", "png"));
+        exploradorArchivos.addChoosableFileFilter(new FileNameExtensionFilter(
+                "Texto plano", "txt"));
+        exploradorArchivos.addChoosableFileFilter(new FileNameExtensionFilter(
+                "Word", "docx", "doc"));
+        exploradorArchivos.addChoosableFileFilter(new FileNameExtensionFilter(
+                "Audio", "wav"));
+        
+
     }
 
     /**
@@ -27,17 +40,24 @@ public class SuperExplorador extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        exploradorArchivos = new javax.swing.JFileChooser();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(exploradorArchivos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(exploradorArchivos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 209, Short.MAX_VALUE))
         );
 
         pack();
@@ -79,5 +99,6 @@ public class SuperExplorador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFileChooser exploradorArchivos;
     // End of variables declaration//GEN-END:variables
 }
