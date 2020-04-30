@@ -5,6 +5,13 @@
  */
 package SuperExplorador_JAA;
 
+import java.awt.Image;
+import java.io.IOException;
+import java.lang.System.Logger;
+import java.util.logging.Level;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -12,7 +19,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author The Test
  */
 public class SuperExplorador extends javax.swing.JFrame {
-
+private MusicPlayer prueba;
     /**
      * Creates new form SuperExplorador
      */
@@ -27,7 +34,6 @@ public class SuperExplorador extends javax.swing.JFrame {
                 "Word", "docx", "doc"));
         exploradorArchivos.addChoosableFileFilter(new FileNameExtensionFilter(
                 "Audio", "wav"));
-        
 
     }
 
@@ -41,8 +47,15 @@ public class SuperExplorador extends javax.swing.JFrame {
     private void initComponents() {
 
         exploradorArchivos = new javax.swing.JFileChooser();
+        jLabelImage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        exploradorArchivos.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                exploradorArchivosPropertyChange(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -50,18 +63,92 @@ public class SuperExplorador extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(exploradorArchivos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addComponent(exploradorArchivos, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabelImage, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(exploradorArchivos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 209, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jLabelImage, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(exploradorArchivos, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(264, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void openImage() {
+
+    }
+
+    private void openTxt() throws IOException {
+    
+       
+            Process p = Runtime.getRuntime().exec("cmd /c notepad " + exploradorArchivos.getSelectedFile().getPath());
+       
+    }
+    
+    private void openDoc() throws IOException {
+   Runtime.getRuntime().exec("C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE " + exploradorArchivos.getSelectedFile().getPath());
+    }
+
+    private void openAudio() {
+      prueba =new MusicPlayer(exploradorArchivos);
+      prueba.setVisible(true);
+    }
+
+    public JFileChooser getExploradorArchivos() {
+        return exploradorArchivos;
+    }
+    
+    
+
+    private void exploradorArchivosPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_exploradorArchivosPropertyChange
+        if (exploradorArchivos.getSelectedFile() != null) {
+            if (exploradorArchivos.getSelectedFile().getName().endsWith(".wav")) {
+               openAudio();
+            }
+            if (exploradorArchivos.getSelectedFile().getName().endsWith(".txt")) {
+                try {
+                    openTxt();
+                } catch (IOException ex) {
+                    java.util.logging.Logger.getLogger(SuperExplorador.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            if (exploradorArchivos.getSelectedFile().getName().endsWith(".docx")) {
+                    try {
+                        openDoc();
+                    } catch (IOException ex) {
+                        java.util.logging.Logger.getLogger(SuperExplorador.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+            }
+            if (exploradorArchivos.getSelectedFile().getName().endsWith(".jpeg")) {
+               muestraImagen();
+            }
+            
+            
+            }
+        
+            
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_exploradorArchivosPropertyChange
+
+    private void muestraImagen() {
+        ImageIcon icono1 = new ImageIcon(exploradorArchivos.getSelectedFile().getPath());
+        Image img = icono1.getImage();
+
+        ImageIcon iconoEscalado = new ImageIcon(img.getScaledInstance(jLabelImage.getWidth(),
+                jLabelImage.getHeight(), Image.SCALE_SMOOTH));
+
+        jLabelImage.setIcon(iconoEscalado);
+    }
 
     /**
      * @param args the command line arguments
@@ -100,5 +187,6 @@ public class SuperExplorador extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFileChooser exploradorArchivos;
+    private javax.swing.JLabel jLabelImage;
     // End of variables declaration//GEN-END:variables
 }
